@@ -16,15 +16,12 @@ spec:
           image: kong:2.0.3-alpine
           env:
             - name: KONG_PG_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: KONG_PG_HOST
-                  name: kong-cp-cm
+              value: postgres
             - name: KONG_PG_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: KONG_PG_PASSWORD
-                  name: kong-cp-cm
+                  key: POSTGRES_PASSWORD
+                  name: kong-secrets
           command:
             - "/bin/sh"
             - "-c"
