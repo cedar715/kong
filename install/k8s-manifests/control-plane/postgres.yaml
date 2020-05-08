@@ -79,7 +79,6 @@ metadata:
     app: postgres
     part-of: kong
 spec:
-  type: NodePort
   ports:
     - port: 5432
   selector:
