@@ -11,5 +11,5 @@ data:
   KONG_DATABASE: "postgres"
   KONG_ADMIN_LISTEN: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
   KONG_CLUSTER_LISTEN: "0.0.0.0:8005"
-  kong_cluster_cert: "/etc/kong/certs/cluster.crt"
-  kong_cluster_cert_key: "/etc/kong/certs/cluster.key"
+  KONG_CLUSTER_CERT: "/etc/kong/certs/cluster.crt"
+  KONG_CLUSTER_CERT_KEY: "/etc/kong/certs/cluster.key"
