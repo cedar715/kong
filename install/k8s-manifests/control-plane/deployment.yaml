@@ -19,12 +19,20 @@ spec:
         role: control-plane
     spec:
       volumes:
-        - name: kong-cp-server-blocks
+        - name: kong-server-blocks
           configMap:
-            name: kong-server-blocks
+            name: kong-cp-server-blocks
             items:
               - key: servers.conf
                 path: servers.conf
+        - name: kong-certs
+          configMap:
+            name: kong-certs
+            items:
+              - key: cluster.crt
+                path: cluster.crt
+              - key: cluster.key
+                path: cluster.key
       containers:
         - name: kong-cp
           image: kong:2.0.3-alpine
@@ -33,7 +41,9 @@ spec:
                 name: kong-cp-cm
           volumeMounts:
             - mountPath: /etc/kong/custom
-              name: kong-cp-server-blocks
+              name: kong-server-blocks
+            - mountPath: /etc/kong/certs
+              name: kong-certs
           ports:
             - containerPort: 8001
               name: admin

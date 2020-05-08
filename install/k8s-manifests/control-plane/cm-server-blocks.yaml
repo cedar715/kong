@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: kong-server-blocks
+  name: kong-cp-server-blocks
   namespace: kong
 data:
   servers.conf: |
