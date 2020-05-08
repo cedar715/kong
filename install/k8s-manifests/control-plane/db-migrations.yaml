@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kong-db-migrations
+  labels:
+    app: kong
+spec:
+  template:
+    metadata:
+      labels:
+        job-name: "kong-db-migrations"
+    spec:
+      containers:
+        - name: kong-db-migrations
+          image: kong:2.0.3-alpine
+          env:
+            - name: KONG_PG_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: KONG_PG_HOST
+                  name: kong-cp-cm
+            - name: KONG_PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: KONG_PG_PASSWORD
+                  name: kong-cp-cm
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "kong migrations bootstrap --vv"
+      restartPolicy: OnFailure

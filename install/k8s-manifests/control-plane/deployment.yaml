@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kong-cp
+  namespace: kong
+  labels:
+    app: kong
+spec:
+  selector:
+    matchLabels:
+      deploymentconfig: kong-cp
+      role: control-plane
+  template:
+    metadata:
+      name: kong-cp
+      labels:
+        app: kong
+        deploymentconfig: kong-cp
+        role: control-plane
+    spec:
+      volumes:
+        - name: kong-cp-server-blocks
+          configMap:
+            name: kong-server-blocks
+            items:
+              - key: servers.conf
+                path: servers.conf
+      containers:
+        - name: kong-cp
+          image: kong:2.0.3-alpine
+          envFrom:
+            - configMapRef:
+                name: kong-cp-cm
+          volumeMounts:
+            - mountPath: /etc/kong/custom
+              name: kong-cp-server-blocks
+          ports:
+            - containerPort: 8001
+              name: admin
+              protocol: TCP
+            - containerPort: 8005
+              name: cp-traffic
+              protocol: TCP
+            - containerPort: 9542
+              name: prometheus
+              protocol: TCP
+            - containerPort: 9001
+              name: health
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              port: health
+              path: /health
+            initialDelaySeconds: 30
+            failureThreshold: 3
+            periodSeconds: 60
+          livenessProbe:
+            httpGet:
+              port: health
+              path: /health
+            initialDelaySeconds: 30
+            failureThreshold: 3
+            periodSeconds: 60
+

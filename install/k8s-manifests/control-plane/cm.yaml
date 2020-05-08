@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kong-cp-cm
+  labels:
+    app: kong
+    role: control-plane
+data:
+  KONG_ROLE: "control_plane"
+  KONG_DATABASE: "postgres"
+  KONG_PG_HOST: "kong-database"
+  KONG_PG_PASSWORD: "kong"
+  KONG_ADMIN_LISTEN: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+  KONG_CLUSTER_LISTEN: "0.0.0.0:8005"
