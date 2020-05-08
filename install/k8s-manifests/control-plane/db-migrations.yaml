@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: kong-db-migrations
+  namespace: kong
   labels:
     app: kong
 spec:
