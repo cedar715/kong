@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpbin
+  namespace: kong
+  labels:
+    app: httpbin
+    part-of: kong
+spec:
+  selector:
+    matchLabels:
+      deploymentconfig: httpbin
+      app: httpbin
+  template:
+    metadata:
+      labels:
+        deploymentconfig: httpbin
+        part-of: kong
+        app: httpbin
+    spec:
+      containers:
+        - name: httpbin
+          image: k8s.gcr.io/echoserver:1.10
+          ports:
+            - containerPort: 8080
+
