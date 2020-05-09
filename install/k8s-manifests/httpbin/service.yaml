@@ -9,6 +9,6 @@ metadata:
 spec:
   type: NodePort
   selector:
-    deploymentconfig: kong-dp
+    deploymentconfig: httpbin
   ports:
     - port: 8080
