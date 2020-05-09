@@ -39,6 +39,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: kong-cp-cm
+          env:
+            - name: KONG_PG_HOST
+              value: postgres
+            - name: KONG_PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: kong-secrets
           volumeMounts:
             - mountPath: /etc/kong/custom
               name: kong-server-blocks
