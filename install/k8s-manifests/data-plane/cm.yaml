@@ -13,4 +13,5 @@ data:
   KONG_CLUSTER_CERT: "/etc/kong/certs/cluster.crt"
   KONG_CLUSTER_CERT_KEY: "/etc/kong/certs/cluster.key"
   KONG_LUA_SSL_TRUSTED_CERTIFICATE: "/etc/kong/certs/cluster.crt"
+  KONG_NGINX_HTTP_INCLUDE: "/etc/kong/custom/servers.conf"
 
