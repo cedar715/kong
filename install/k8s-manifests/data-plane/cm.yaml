@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kong-dp-cm
+  namespace: kong
   labels:
     app: kong
     role: data-plane
