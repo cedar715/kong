@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kong-dp
+  namespace: kong
+  labels:
+    app: kong
+    role: data-plane
+spec:
+  selector:
+    matchLabels:
+      deploymentconfig: kong-dp
+      role: data-plane
+  template:
+    metadata:
+      name: kong-dp
+      labels:
+        app: kong
+        deploymentconfig: kong-dp
+        role: data-plane
+    spec:
+      volumes:
+        - name: kong-server-blocks
+          configMap:
+            name: kong-dp-server-blocks
+            items:
+              - key: servers.conf
+                path: servers.conf
+        - name: kong-certs
+          configMap:
+            name: kong-certs
+            items:
+              - key: cluster.crt
+                path: cluster.crt
+              - key: cluster.key
+                path: cluster.key
+      containers:
+        - name: kong-dp
+          image: kong:2.0.3-alpine
+          envFrom:
+            - configMapRef:
+                name: kong-dp-cm
+          volumeMounts:
+            - mountPath: /etc/kong/custom
+              name: kong-server-blocks
+            - mountPath: /etc/kong/certs
+              name: kong-certs
+          ports:
+            - containerPort: 8000
+              name: proxy
+              protocol: TCP
+            - containerPort: 9001
+              name: health
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              port: health
+              path: /health
+            initialDelaySeconds: 30
+            failureThreshold: 3
+            periodSeconds: 60
+          livenessProbe:
+            httpGet:
+              port: health
+              path: /health
+            initialDelaySeconds: 30
+            failureThreshold: 3
+            periodSeconds: 60
+

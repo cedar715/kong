@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kong-dp-cm
+  labels:
+    app: kong
+    role: data-plane
+data:
+  KONG_ROLE: "data_plane"
+  KONG_CLUSTER_CONTROL_PLANE: "kong-cp:8005"
+  KONG_DATABASE: "off"
+  KONG_CLUSTER_CERT: "/etc/kong/certs/cluster.crt"
+  KONG_CLUSTER_CERT_KEY: "/etc/kong/certs/cluster.key"
+  KONG_LUA_SSL_TRUSTED_CERTIFICATE: "/etc/kong/certs/cluster.crt"
+
