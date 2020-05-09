@@ -10,3 +10,6 @@ spec:
     deploymentconfig: kong-cp
   ports:
     - port: 8001
+      name: admin
+    - port: 8005
+      name: cp-traffic
