@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kong-cp
+  namespace: kong
   labels:
     app: kong
 spec:
