@@ -12,5 +12,7 @@ spec:
   ports:
     - port: 8001
       name: admin
+      nodePort: 30081
     - port: 8005
       name: cp-traffic
+      nodePort: 30085
