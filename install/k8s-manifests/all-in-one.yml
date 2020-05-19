@@ -317,6 +317,8 @@ spec:
                 path: cluster.crt
               - key: cluster.key
                 path: cluster.key
+      securityContext:
+        runAsUser: 0
       containers:
         - name: kong-cp
           image: kong:2.0.3-alpine
